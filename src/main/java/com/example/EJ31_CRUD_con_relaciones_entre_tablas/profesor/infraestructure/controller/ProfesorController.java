@@ -22,9 +22,8 @@ public class ProfesorController {
 
 
     @PostMapping("/addProfesor")
-    public String addProfesor(@RequestBody @Valid ProfesorInputDTO profesorInputDTO) throws Exception {            //@valid valida que lso datos que le paso sean correctos.
-        profesorService.addProfesor(profesorInputDTO);
-        return "Persona añadida";
+    public ProfesorOutputDTO addProfesor(@RequestBody @Valid ProfesorInputDTO profesorInputDTO) throws Exception {            //@valid valida que lso datos que le paso sean correctos.
+        return profesorService.addProfesor(profesorInputDTO);
     }
 
     @GetMapping("/getProfesor/{id}")

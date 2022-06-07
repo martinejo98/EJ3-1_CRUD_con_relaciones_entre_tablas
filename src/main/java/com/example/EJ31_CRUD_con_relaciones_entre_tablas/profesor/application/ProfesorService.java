@@ -1,5 +1,7 @@
 package com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.application;
 
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.domain.Persona;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.repository.PersonaRepository;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.domain.Profesor;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.exception.NotFoundException;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.infraestructure.dto.input.ProfesorInputDTO;
@@ -18,13 +20,17 @@ public class ProfesorService {
     ProfesorRepository profesorRepository;
 
     @Autowired
+    PersonaRepository personaRepository;
+
+    @Autowired
     ModelMapper modelMapper;
 
     public ProfesorOutputDTO addProfesor(ProfesorInputDTO profesorInputDTO) throws Exception {
-        Profesor p = modelMapper.map(profesorInputDTO, Profesor.class);
-
-        profesorRepository.save(modelMapper.map(profesorInputDTO, Profesor.class));
-        return modelMapper.map(profesorInputDTO, ProfesorOutputDTO.class);
+        Persona persona = personaRepository.findById(profesorInputDTO.getPersona()).orElseThrow(()-> new NotFoundException("No se ha encontrado"));
+        Profesor profesorEntity = new Profesor(profesorInputDTO);
+        profesorEntity.setPersona(persona);
+        profesorRepository.save(profesorEntity);
+        return new ProfesorOutputDTO(profesorEntity);
     }
 
     public ProfesorOutputDTO getProfesor(String id) {
@@ -36,9 +42,6 @@ public class ProfesorService {
     public ProfesorOutputDTO updateProfesor(ProfesorInputDTO profesorInputDTO, String id) {
         Optional<Profesor> profesor = profesorRepository.findById(id);
         if(profesor.isPresent()){
-
-            profesorInputDTO.setId_profesor(id);
-
 
             profesorRepository.saveAndFlush(modelMapper.map(profesorInputDTO, Profesor.class));
             ProfesorOutputDTO profDTO = modelMapper.map(profesorInputDTO, ProfesorOutputDTO.class);

@@ -2,12 +2,15 @@ package com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.domain;
 
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.PersonaSequenceIdGenerator;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.infraestructure.dto.input.EstudianteInputDTO;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.domain.Estudiante_asignatura;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.domain.Persona;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.domain.Profesor;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "estudiantes")
@@ -38,15 +41,15 @@ public class Estudiante{
     @Column(name = "comentarios")
     private String coments;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_profesor")
-    private Profesor profesor;*/
+    private Profesor profesor;
 
     @Column(name = "rama")
     private String branch;
 
-    //@OneToMany
-    //private List<Estudiante_asignatura> estudios;
+    /*@OneToMany
+    private List<Estudiante_asignatura> estudios;*/
 
     public Estudiante (EstudianteInputDTO estudianteInputDTO){
         setComents(estudianteInputDTO.getComents());

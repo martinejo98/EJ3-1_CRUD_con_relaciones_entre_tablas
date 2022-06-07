@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class ProfesorInputDTO {
 
-    private String id_profesor;
-    private String id_persona;
+    private String persona;
     private String coments;
     private String branch;
 }

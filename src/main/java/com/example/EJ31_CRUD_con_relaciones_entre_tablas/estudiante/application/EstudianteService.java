@@ -49,11 +49,10 @@ public class EstudianteService {
     public EstudianteOutputDTO updateEstudiante(String id, EstudianteInputDTO estudianteInputDTO){
         Optional <Estudiante> estudiante = estudianteRepository.findById(id);
         if(estudiante.isPresent()){
-            //estudianteInputDTO.setId_student(id);
-            //estudianteInputDTO.setPersona(Optional.ofNullable(estudianteInputDTO.getPersona()).orElse(estudiante.get().getPersona()));
+            estudianteInputDTO.setPersona(Optional.ofNullable(estudianteInputDTO.getPersona()).orElse(estudiante.get().getPersona().getId_persona()));
             estudianteInputDTO.setNum_hours_week(Optional.ofNullable(estudianteInputDTO.getNum_hours_week()).orElse(estudiante.get().getNum_hours_week()));
             estudianteInputDTO.setComents(Optional.ofNullable(estudianteInputDTO.getComents()).orElse(estudiante.get().getComents()));
-            //estudianteInputDTO.setProfesor(Optional.ofNullable(estudianteInputDTO.getProfesor()).orElse(estudiante.get().getProfesor()));
+            estudianteInputDTO.setProfesor(Optional.ofNullable(estudianteInputDTO.getProfesor()).orElse(estudiante.get().getProfesor().getId_profesor()));
             estudianteInputDTO.setBranch(Optional.ofNullable(estudianteInputDTO.getBranch()).orElse(estudiante.get().getBranch()));
             //estudianteInputDTO.setEstudios( Optional.ofNullable(estudianteInputDTO.getEstudios()) .orElse(estudiante.get().getEstudios()));
 

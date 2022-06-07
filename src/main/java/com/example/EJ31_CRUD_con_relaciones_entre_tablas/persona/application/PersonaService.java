@@ -76,7 +76,6 @@ public class PersonaService {
         Optional<Persona> personEntity = personaRepository.findById(id);
         if(personEntity.isPresent()){
 
-            //persona.setId_persona(id);
             persona.setUsuario(Optional.ofNullable(persona.getUsuario()).orElse(personEntity.get().getUsuario()));
             persona.setPassword(Optional.ofNullable(persona.getPassword()).orElse(personEntity.get().getPassword()));
             persona.setName(Optional.ofNullable(persona.getName()).orElse(personEntity.get().getName()));
