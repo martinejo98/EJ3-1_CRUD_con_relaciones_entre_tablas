@@ -34,9 +34,10 @@ public class ProfesorService {
     }
 
     public ProfesorOutputDTO getProfesor(String id) {
-        Profesor profesor = profesorRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado a nadie con el id: "+id));
-        ProfesorOutputDTO profDTO = modelMapper.map(profesor, ProfesorOutputDTO.class);
-        return profDTO;
+        Profesor profesor = profesorRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado al profesor con el id: "+id));
+        ProfesorOutputDTO profesorOutputDTO = modelMapper.map(profesor, ProfesorOutputDTO.class);
+        profesorOutputDTO.setId_persona(profesor.getPersona().getId_persona());
+        return profesorOutputDTO;
     }
 
     public ProfesorOutputDTO updateProfesor(ProfesorInputDTO profesorInputDTO, String id) {
@@ -47,7 +48,7 @@ public class ProfesorService {
             ProfesorOutputDTO profDTO = modelMapper.map(profesorInputDTO, ProfesorOutputDTO.class);
             return profDTO;
         } else {
-            throw new NotFoundException("No se ha encontrado a nadie con el id: "+id);
+            throw new NotFoundException("No se ha encontrado al profesor con el id: "+id);
         }
     }
 
@@ -57,7 +58,7 @@ public class ProfesorService {
             profesorRepository.deleteById(id);
             return "Profesor eliminado";
         }else{
-            throw new NotFoundException("No se ha encontrado a nadie con el id: "+id);
+            throw new NotFoundException("No se ha encontrado al profesor con el id: "+id);
         }
     }
 }

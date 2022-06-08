@@ -4,7 +4,6 @@ import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.application.Pr
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.exception.UnprocesableException;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.infraestructure.dto.input.ProfesorInputDTO;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.infraestructure.dto.output.ProfesorOutputDTO;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,11 +14,7 @@ import javax.validation.Valid;
 public class ProfesorController {
 
     @Autowired
-    private ProfesorService profesorService;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
+    ProfesorService profesorService;
 
     @PostMapping("/addProfesor")
     public ProfesorOutputDTO addProfesor(@RequestBody @Valid ProfesorInputDTO profesorInputDTO) throws Exception {            //@valid valida que lso datos que le paso sean correctos.

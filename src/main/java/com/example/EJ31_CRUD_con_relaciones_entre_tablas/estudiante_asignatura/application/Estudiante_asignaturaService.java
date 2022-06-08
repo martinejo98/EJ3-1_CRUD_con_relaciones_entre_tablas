@@ -1,5 +1,7 @@
 package com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.application;
 
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.domain.Estudiante;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.infraestructure.repository.EstudianteRepository;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.domain.Estudiante_asignatura;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.infrastructure.dto.input.Estudiante_asignaturaInputDTO;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.infrastructure.dto.output.Estudiante_asignaturaOutputDTO;
@@ -18,6 +20,9 @@ public class Estudiante_asignaturaService {
     Estudiante_asignaturaRepository estudiante_asignaturaRepository;
 
     @Autowired
+    EstudianteRepository estudianteRepository;
+
+    @Autowired
     ModelMapper modelMapper;
 
     public Estudiante_asignaturaOutputDTO addAsignatura(Estudiante_asignaturaInputDTO estudiante_asignaturaInputDTO){
@@ -25,9 +30,10 @@ public class Estudiante_asignaturaService {
         return modelMapper.map(estudiante_asignatura, Estudiante_asignaturaOutputDTO.class);
     }
 
-    public Estudiante_asignaturaOutputDTO getAsignatura(String id){
-        Estudiante_asignatura estudiante_asignatura = estudiante_asignaturaRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado al asignatura con el id: "+id));
-        Estudiante_asignaturaOutputDTO estudiante_asignaturaOutputDTO = modelMapper.map(estudiante_asignatura, Estudiante_asignaturaOutputDTO.class);
+    public Estudiante_asignaturaOutputDTO getEstudianteAsignatura(String id){
+        Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(()-> new NotFoundException("No existe el estudiante con id: "+id));
+        ////Continuar/////
+        Estudiante_asignaturaOutputDTO estudiante_asignaturaOutputDTO = modelMapper.map(estudiante, Estudiante_asignaturaOutputDTO.class);
         return estudiante_asignaturaOutputDTO;
     }
 

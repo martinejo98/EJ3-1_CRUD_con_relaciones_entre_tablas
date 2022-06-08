@@ -32,15 +32,14 @@ public class Profesor {
     )
     private String id_profesor;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_persona")
-    //@NotBlank
     private Persona persona;
 
-    @Column(name = "Coments")
+    @Column(name = "comentarios")
     private String coments;
 
-    @NotBlank
+    @Column(name = "rama")
     private String branch;
 
     public Profesor (ProfesorInputDTO profesorInputDTO){

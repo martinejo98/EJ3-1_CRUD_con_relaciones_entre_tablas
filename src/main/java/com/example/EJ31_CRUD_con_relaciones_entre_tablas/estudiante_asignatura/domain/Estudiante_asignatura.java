@@ -13,7 +13,7 @@ import java.sql.Date;
 
 @Entity
 @Data
-@Table(name = "estudios")
+@Table(name = "asignaturas")
 @NoArgsConstructor
 public class Estudiante_asignatura {
 
@@ -24,7 +24,7 @@ public class Estudiante_asignatura {
             strategy = "com.example.EJ31_CRUD_con_relaciones_entre_tablas.PersonaSequenceIdGenerator",
             parameters = {
                     @Parameter(name = PersonaSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-                    @Parameter(name = PersonaSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "ESTU"),
+                    @Parameter(name = PersonaSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "ASIG"),
                     @Parameter(name = PersonaSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d")
             }
     )

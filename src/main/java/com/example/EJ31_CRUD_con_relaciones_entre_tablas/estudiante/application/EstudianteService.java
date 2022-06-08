@@ -8,6 +8,8 @@ import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.infraestruct
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.infraestructure.repository.EstudianteRepository;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.domain.Persona;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.repository.PersonaRepository;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.domain.Profesor;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.infraestructure.repository.ProfesorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,20 +26,24 @@ public class EstudianteService {
     PersonaRepository personaRepository;
 
     @Autowired
+    ProfesorRepository profesorRepository;
+
+    @Autowired
     ModelMapper modelMapper;
 
     public EstudianteOutputDTO addEstudiante(EstudianteInputDTO estudianteInputDTO){
-        Persona persona = personaRepository.findById(estudianteInputDTO.getPersona()).orElseThrow(()-> new NotFoundException("No se ha encontrado"));
+        Persona persona = personaRepository.findById(estudianteInputDTO.getPersona()).orElseThrow(()-> new NotFoundException("No se ha encontrado a la persona"));
+        Profesor profesor = profesorRepository.findById(estudianteInputDTO.getProfesor()).orElseThrow(()-> new NotFoundException("No se ha encontrado al profesor"));
         Estudiante estudianteEntity = new Estudiante(estudianteInputDTO);
         estudianteEntity.setPersona(persona);
+        estudianteEntity.setProfesor(profesor);
         estudianteRepository.save(estudianteEntity);
         return new EstudianteOutputDTO(estudianteEntity);
     }
 
     public EstudianteOutputDTO getEstudiante(String id){
         Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado al estudiante con el ID: "+id));
-        EstudianteOutputDTO estudianteOutputDTO = modelMapper.map(estudiante, EstudianteOutputDTO.class);
-        return estudianteOutputDTO;
+        return new EstudianteOutputDTO(estudiante);
     }
 
     public EstudianteOutputDTOFull getEstudianteFull(String id){

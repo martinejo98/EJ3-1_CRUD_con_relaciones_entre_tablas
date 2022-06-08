@@ -1,7 +1,9 @@
 package com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.domain;
 
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.PersonaSequenceIdGenerator;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.dto.input.PersonaInputDTO;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -14,6 +16,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name = "Persona")
+@NoArgsConstructor
 public class Persona {
 
     @Id
@@ -75,4 +78,17 @@ public class Persona {
     @Column
     @NotBlank(message = "No puede estar vacio")
     private String termination_date;
+
+    public Persona (PersonaInputDTO personaInputDTO){
+        setUsuario(personaInputDTO.getUsuario());
+        setName(personaInputDTO.getName());
+        setSurname(personaInputDTO.getSurname());
+        setCompany_email(personaInputDTO.getCompany_email());
+        setPersonal_email(personaInputDTO.getPersonal_email());
+        setCity(personaInputDTO.getCity());
+        setActive(personaInputDTO.getActive());
+        setCreated_date(personaInputDTO.getCreated_date());
+        setImagen_url(personaInputDTO.getImagen_url());
+        setTermination_date(personaInputDTO.getTermination_date());
+    }
 }

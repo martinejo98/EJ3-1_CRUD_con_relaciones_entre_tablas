@@ -2,8 +2,10 @@ package com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.infraestructu
 
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.domain.Profesor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ProfesorOutputDTO {
 
     private String id_profesor;

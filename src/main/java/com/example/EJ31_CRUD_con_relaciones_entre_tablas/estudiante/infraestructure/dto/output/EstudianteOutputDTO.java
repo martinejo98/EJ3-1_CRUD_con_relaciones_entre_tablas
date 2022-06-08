@@ -15,14 +15,14 @@ public class EstudianteOutputDTO{
     private String id_persona;
     private Integer num_hours_week;
     private String coments;
-    private String profesor;
+    private String id_profesor;
     private String branch;
     //private List<Estudiante_asignatura> estudios;
 
     public EstudianteOutputDTO(Estudiante estudiante) {
         setId_student(estudiante.getId_student());
         setId_persona(estudiante.getPersona().getId_persona());
-        setProfesor(estudiante.getProfesor().getId_profesor());
+        setId_profesor(estudiante.getProfesor().getId_profesor());
         setComents(estudiante.getComents());
         setBranch(estudiante.getBranch());
         setNum_hours_week(estudiante.getNum_hours_week());

@@ -31,19 +31,33 @@ public class PersonaController {
     }
 
     @GetMapping("/getPersonaID/{id}")
-    public PersonaOutputDTO getPersonaByID(@PathVariable String id){
-        return personaService.getPersonaByID(id);
+    public PersonaOutputDTO getPersonaByID(@RequestParam(value = "outputType", defaultValue = "persona") String outputType, @PathVariable String id){
+        if(outputType.equals("profesor")){
+            return personaService.getPersonaByIDProfesor(id);
+        }else if(outputType.equals("estudiante")){
+            return personaService.getPersonaByIDEstudiante(id);
+        }else{
+            return personaService.getPersonaByID(id);
+        }
     }
 
 
     @GetMapping("/getPersonaName/{name}")
-    public List<PersonaOutputDTO> getPersonaByName(@PathVariable String name){
-        return personaService.getPersonaByName(name);
+    public List<PersonaOutputDTO> getPersonaByName(@RequestParam(value = "outputType", defaultValue = "simple") String outputType, @PathVariable String name){
+        if(outputType.equals("full")){
+            return personaService.getPersonaByNameFull(name);
+        }else{
+            return personaService.getPersonaByName(name);
+        }
     }
 
     @GetMapping("/getAll")
-    public List <PersonaOutputDTO> getAll(){
-        return personaService.getAll();
+    public List <PersonaOutputDTO> getAll(@RequestParam(value = "outputType", defaultValue = "simple") String outputType){
+        if(outputType.equals("full")){
+            return personaService.getAllFull();
+        }else{
+            return personaService.getAll();
+        }
     }
 
     @PutMapping("/update/{id}")

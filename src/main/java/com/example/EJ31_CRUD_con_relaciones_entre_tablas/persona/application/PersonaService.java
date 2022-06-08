@@ -1,12 +1,17 @@
 package com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.application;
 
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.domain.Estudiante;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.domain.Persona;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.exception.NotFoundException;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.exception.UnprocesableException;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.dto.input.PersonaInputDTO;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.dto.output.PersonaOutputDTO;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.infraestructure.repository.EstudianteRepository;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.dto.output.PersonaOutputDTOEstudiante;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.dto.output.PersonaOutputDTOProfesor;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.repository.PersonaRepository;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.domain.Profesor;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.infraestructure.repository.ProfesorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,8 @@ public class PersonaService {
     @Autowired
     EstudianteRepository estudianteRepository;
 
+    @Autowired
+    ProfesorRepository profesorRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -38,8 +45,28 @@ public class PersonaService {
 
     public PersonaOutputDTO getPersonaByID(String id) {
         Persona persona = personaRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado a nadie con el id: "+id));
-        PersonaOutputDTO peDTO = modelMapper.map(persona, PersonaOutputDTO.class);
-        return peDTO;
+        PersonaOutputDTO personaOutputDTO = modelMapper.map(persona, PersonaOutputDTO.class);
+        return personaOutputDTO;
+    }
+
+    public PersonaOutputDTO getPersonaByIDProfesor(String id) {
+        Persona persona = personaRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado a nadie con el id: "+id));
+        PersonaOutputDTOProfesor personaOutputDTOProfesor = modelMapper.map(persona, PersonaOutputDTOProfesor.class);
+        Profesor profesor = new Profesor();
+        personaOutputDTOProfesor.setId_profesor(profesor.getId_profesor());
+        personaOutputDTOProfesor.setComents(profesor.getComents());
+        personaOutputDTOProfesor.setBranch(profesor.getBranch());
+        return personaOutputDTOProfesor;
+    }
+
+    public PersonaOutputDTO getPersonaByIDEstudiante(String id) {
+        Persona persona = personaRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado a nadie con el id: "+id));
+        PersonaOutputDTOEstudiante personaOutputDTOEstudiante = modelMapper.map(persona, PersonaOutputDTOEstudiante.class);
+        Estudiante estudiante = new Estudiante();
+        personaOutputDTOEstudiante.setId_student(estudiante.getId_student());
+        personaOutputDTOEstudiante.setComents(estudiante.getId_student());
+        personaOutputDTOEstudiante.setBranch(estudiante.getId_student());
+        return personaOutputDTOEstudiante;
     }
 
     public List<PersonaOutputDTO> getPersonaByName(String name){
@@ -56,7 +83,32 @@ public class PersonaService {
         return listaPersonas;
     }
 
+    public List<PersonaOutputDTO> getPersonaByNameFull(String name){
+        List <PersonaOutputDTO> listaPersonas = new ArrayList<>();
+        personaRepository.findAll().forEach(
+                person -> {
+                    if(person.getName().equals(name)){
+                        PersonaOutputDTO peDTO = modelMapper.map(person, PersonaOutputDTO.class);
+                        listaPersonas.add(peDTO);
+                    }
+                }
+        );
+
+        return listaPersonas;
+    }
+
     public List<PersonaOutputDTO> getAll(){
+        List <PersonaOutputDTO> listaPersonas = new ArrayList<>();
+        personaRepository.findAll().forEach(
+                person -> {
+                    PersonaOutputDTO peDTO = modelMapper.map(person, PersonaOutputDTO.class);
+                    listaPersonas.add(peDTO);
+                }
+        );
+        return listaPersonas;
+    }
+
+    public List<PersonaOutputDTO> getAllFull(){
         List <PersonaOutputDTO> listaPersonas = new ArrayList<>();
         personaRepository.findAll().forEach(
                 person -> {

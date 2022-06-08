@@ -18,14 +18,14 @@ public class Estudiante_asignaturaController {
     @Autowired
     Estudiante_asignaturaService estudiante_asignaturaService;
 
-    @PostMapping("/addEstudiante")
+    @PostMapping("/addAsignatura")
     public Estudiante_asignaturaOutputDTO addAsignatura(@RequestBody @Valid Estudiante_asignaturaInputDTO estudiante_asignaturaInputDTO){
         return estudiante_asignaturaService.addAsignatura(estudiante_asignaturaInputDTO);
     }
 
-    @GetMapping("/getAsignatura/{id}")
-    public Estudiante_asignaturaOutputDTO getAsignatura(@PathVariable String id){
-        return estudiante_asignaturaService.getAsignatura(id);
+    @GetMapping("/getEstudianteAsignatura/{id}")
+    public Estudiante_asignaturaOutputDTO getEstudianteAsignatura(@PathVariable String id){
+        return estudiante_asignaturaService.getEstudianteAsignatura(id);
     }
 
     @PutMapping("/update/{id}")
