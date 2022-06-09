@@ -1,7 +1,9 @@
 package com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.domain;
 
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.PersonaSequenceIdGenerator;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.domain.Estudiante;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.dto.input.PersonaInputDTO;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.profesor.domain.Profesor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -78,6 +80,12 @@ public class Persona {
     @Column
     @NotBlank(message = "No puede estar vacio")
     private String termination_date;
+
+    @OneToOne(mappedBy = "persona")
+    private Estudiante estudiante;
+
+    @OneToOne(mappedBy = "persona")
+    private Profesor profesor;
 
     public Persona (PersonaInputDTO personaInputDTO){
         setUsuario(personaInputDTO.getUsuario());

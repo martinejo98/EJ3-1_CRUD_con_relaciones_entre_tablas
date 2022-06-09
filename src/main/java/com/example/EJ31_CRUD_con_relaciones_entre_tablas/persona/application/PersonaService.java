@@ -62,10 +62,6 @@ public class PersonaService {
     public PersonaOutputDTO getPersonaByIDEstudiante(String id) {
         Persona persona = personaRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado a nadie con el id: "+id));
         PersonaOutputDTOEstudiante personaOutputDTOEstudiante = modelMapper.map(persona, PersonaOutputDTOEstudiante.class);
-        Estudiante estudiante = new Estudiante();
-        personaOutputDTOEstudiante.setId_student(estudiante.getId_student());
-        personaOutputDTOEstudiante.setComents(estudiante.getId_student());
-        personaOutputDTOEstudiante.setBranch(estudiante.getId_student());
         return personaOutputDTOEstudiante;
     }
 

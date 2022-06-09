@@ -11,19 +11,4 @@ public class PersonaOutputDTOEstudiante extends PersonaOutputDTO{
 
     private EstudianteOutputDTO estudianteOutputDTO;
 
-    private String id_student;
-    private Integer num_hours_week;
-    private String coments;
-    private String id_profesor;
-    private String branch;
-
-    public PersonaOutputDTOEstudiante(Persona persona){
-        super(persona);
-        setId_student(estudianteOutputDTO.getId_student());
-        setNum_hours_week(estudianteOutputDTO.getNum_hours_week());
-        setComents(estudianteOutputDTO.getComents());
-        setId_profesor(estudianteOutputDTO.getId_profesor());
-        setBranch(estudianteOutputDTO.getBranch());
-    }
-
 }
