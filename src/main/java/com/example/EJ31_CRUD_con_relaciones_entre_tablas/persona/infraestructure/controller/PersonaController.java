@@ -43,7 +43,7 @@ public class PersonaController {
 
 
     @GetMapping("/getPersonaName/{name}")
-    public List<PersonaOutputDTO> getPersonaByName(@RequestParam(value = "outputType", defaultValue = "simple") String outputType, @PathVariable String name){
+    public List<PersonaOutputDTO> getPersonaByName(@RequestParam(value = "outputType", defaultValue = "persona") String outputType, @PathVariable String name){
         if(outputType.equals("full")){
             return personaService.getPersonaByNameFull(name);
         }else{

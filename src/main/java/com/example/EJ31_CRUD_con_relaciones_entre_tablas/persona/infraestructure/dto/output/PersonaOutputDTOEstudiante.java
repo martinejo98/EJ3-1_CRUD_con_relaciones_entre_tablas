@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PersonaOutputDTOEstudiante extends PersonaOutputDTO{
 
-    private EstudianteOutputDTO estudianteOutputDTO;
+    private EstudianteOutputDTO estudiante;
 
+    public PersonaOutputDTOEstudiante (Persona persona){
+        super(persona);
+        setId_persona(persona.getId_persona());
+        estudiante.setId_profesor(estudiante.getId_profesor());
+    }
 }

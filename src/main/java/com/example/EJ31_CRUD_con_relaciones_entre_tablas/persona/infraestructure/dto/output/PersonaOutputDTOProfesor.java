@@ -9,16 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PersonaOutputDTOProfesor extends PersonaOutputDTO{
 
-    private ProfesorOutputDTO profesorOutputDTO;
+    private ProfesorOutputDTO profesor;
 
-    private String id_profesor;
-    private String coments;
-    private String branch;
-
-    public PersonaOutputDTOProfesor(Persona persona){
+    public PersonaOutputDTOProfesor (Persona persona){
         super(persona);
-        setId_profesor(profesorOutputDTO.getId_profesor());
-        setComents(profesorOutputDTO.getComents());
-        setBranch(profesorOutputDTO.getBranch());
+        setId_persona(persona.getId_persona());
     }
 }

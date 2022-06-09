@@ -1,7 +1,6 @@
 package com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.dto.output;
 
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.domain.Persona;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
