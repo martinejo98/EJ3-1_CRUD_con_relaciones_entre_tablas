@@ -75,13 +75,27 @@ public class PersonaService {
         return listaPersonas;
     }
 
-    public List<PersonaOutputDTO> getPersonaByNameFull(String name){
+    public List<PersonaOutputDTO> getPersonaByNameEstudiante(String name){
         List <PersonaOutputDTO> listaPersonas = new ArrayList<>();
         personaRepository.findAll().forEach(
                 person -> {
                     if(person.getName().equals(name)){
-                        PersonaOutputDTO peDTO = modelMapper.map(person, PersonaOutputDTO.class);
-                        listaPersonas.add(peDTO);
+                        PersonaOutputDTOEstudiante personaOutputDTOEstudiante = modelMapper.map(person, PersonaOutputDTOEstudiante.class);
+                        listaPersonas.add(personaOutputDTOEstudiante);
+                    }
+                }
+        );
+
+        return listaPersonas;
+    }
+
+    public List<PersonaOutputDTO> getPersonaByNameProfesor(String name){
+        List <PersonaOutputDTO> listaPersonas = new ArrayList<>();
+        personaRepository.findAll().forEach(
+                person -> {
+                    if(person.getName().equals(name)){
+                        PersonaOutputDTOProfesor personaOutputDTOProfesor = modelMapper.map(person, PersonaOutputDTOProfesor.class);
+                        listaPersonas.add(personaOutputDTOProfesor);
                     }
                 }
         );
