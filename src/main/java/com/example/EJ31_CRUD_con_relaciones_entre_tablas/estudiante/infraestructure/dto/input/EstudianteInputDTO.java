@@ -13,6 +13,6 @@ public class EstudianteInputDTO {
     private String coments;
     private String profesor;
     private String branch;
-    //private List<Estudiante_asignatura> estudios;
+    private List<Estudiante_asignatura> estudios;
 
 }

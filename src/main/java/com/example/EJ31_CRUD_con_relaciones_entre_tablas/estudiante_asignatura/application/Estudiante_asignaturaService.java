@@ -7,10 +7,13 @@ import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.i
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.infrastructure.dto.output.Estudiante_asignaturaOutputDTO;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.infrastructure.repository.Estudiante_asignaturaRepository;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.exception.NotFoundException;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.persona.infraestructure.dto.output.PersonaOutputDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,15 +29,21 @@ public class Estudiante_asignaturaService {
     ModelMapper modelMapper;
 
     public Estudiante_asignaturaOutputDTO addAsignatura(Estudiante_asignaturaInputDTO estudiante_asignaturaInputDTO){
+        System.out.println("hola1");
         Estudiante_asignatura estudiante_asignatura = estudiante_asignaturaRepository.save(modelMapper.map(estudiante_asignaturaInputDTO, Estudiante_asignatura.class));
+        System.out.println("hola2");
         return modelMapper.map(estudiante_asignatura, Estudiante_asignaturaOutputDTO.class);
     }
 
-    public Estudiante_asignaturaOutputDTO getEstudianteAsignatura(String id){
-        Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(()-> new NotFoundException("No existe el estudiante con id: "+id));
-        ////Continuar/////
-        Estudiante_asignaturaOutputDTO estudiante_asignaturaOutputDTO = modelMapper.map(estudiante, Estudiante_asignaturaOutputDTO.class);
-        return estudiante_asignaturaOutputDTO;
+    public List<Estudiante_asignaturaOutputDTO> getEstudianteAsignatura(String id){
+        List <Estudiante_asignaturaOutputDTO> listaEstudianteAsignatura = new ArrayList<>();
+        estudiante_asignaturaRepository.findAll().forEach(
+                estudiante_asignatura -> {
+                    Estudiante_asignaturaOutputDTO estudiante_asignaturaOutputDTO = modelMapper.map(estudiante_asignatura, Estudiante_asignaturaOutputDTO.class);
+                    listaEstudianteAsignatura.add(estudiante_asignaturaOutputDTO);
+                }
+        );
+        return listaEstudianteAsignatura;
     }
 
     public Estudiante_asignaturaOutputDTO updateAsignatura(String id, Estudiante_asignaturaInputDTO estudiante_asignaturaInputDTO){
@@ -45,7 +54,7 @@ public class Estudiante_asignaturaService {
             estudiante_asignaturaInputDTO.setComents(Optional.ofNullable(estudiante_asignaturaInputDTO.getComents()).orElse(Estuadiante_asigantura.get().getComment()));
             estudiante_asignaturaInputDTO.setInitial_date(Optional.ofNullable(estudiante_asignaturaInputDTO.getInitial_date()).orElse(Estuadiante_asigantura.get().getInitial_date()));
             estudiante_asignaturaInputDTO.setFinish_date(Optional.ofNullable(estudiante_asignaturaInputDTO.getFinish_date()).orElse(Estuadiante_asigantura.get().getFinish_date()));
-            estudiante_asignaturaInputDTO.setId_estudiante(Optional.ofNullable(estudiante_asignaturaInputDTO.getId_estudiante()).orElse(Estuadiante_asigantura.get().getStudent().getId_student()));
+            estudiante_asignaturaInputDTO.setStudent(Optional.ofNullable(estudiante_asignaturaInputDTO.getStudent()).orElse(Estuadiante_asigantura.get().getStudent().getId_student()));
 
             estudiante_asignaturaRepository.saveAndFlush(modelMapper.map(estudiante_asignaturaInputDTO, Estudiante_asignatura.class));
             Estudiante_asignaturaOutputDTO estudiante_asignaturaOutputDTO = modelMapper.map(estudiante_asignaturaInputDTO, Estudiante_asignaturaOutputDTO.class);

@@ -17,7 +17,7 @@ public class EstudianteOutputDTO{
     private String coments;
     private String id_profesor;
     private String branch;
-    //private List<Estudiante_asignatura> estudios;
+    private List<Estudiante_asignatura> estudios;
 
     public EstudianteOutputDTO(Estudiante estudiante) {
         setId_student(estudiante.getId_student());

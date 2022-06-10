@@ -35,7 +35,7 @@ public class Estudiante_asignatura {
     private Profesor profesor;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_student")
+    @JoinColumn(name = "id_estudiante")
     private Estudiante student;
 
     @Column(name = "asignatura")
