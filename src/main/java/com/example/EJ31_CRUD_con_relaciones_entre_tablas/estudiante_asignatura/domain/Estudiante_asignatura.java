@@ -10,6 +10,7 @@ import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,13 +31,8 @@ public class Estudiante_asignatura {
     )
     private String id_study;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_profesor")
-    private Profesor profesor;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_estudiante")
-    private Estudiante student;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Estudiante> student;
 
     @Column(name = "asignatura")
     private String asignatura;
@@ -49,4 +45,5 @@ public class Estudiante_asignatura {
 
     @Column(name = "finish_date")
     private Date finish_date;
+
 }

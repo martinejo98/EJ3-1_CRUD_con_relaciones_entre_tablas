@@ -1,6 +1,8 @@
 package com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.application;
 
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.domain.Estudiante;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.domain.Estudiante_asignatura;
+import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante_asignatura.infrastructure.repository.Estudiante_asignaturaRepository;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.exception.NotFoundException;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.infraestructure.dto.input.EstudianteInputDTO;
 import com.example.EJ31_CRUD_con_relaciones_entre_tablas.estudiante.infraestructure.dto.output.EstudianteOutputDTO;
@@ -14,7 +16,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EstudianteService {
@@ -27,6 +31,9 @@ public class EstudianteService {
 
     @Autowired
     ProfesorRepository profesorRepository;
+
+    @Autowired
+    Estudiante_asignaturaRepository estudiante_asignaturaRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -50,6 +57,24 @@ public class EstudianteService {
         Estudiante estudiante = estudianteRepository .findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado al estudiante con el ID: "+id));
         EstudianteOutputDTOFull estudianteOutputDTOFull = new EstudianteOutputDTOFull(estudiante);
         return estudianteOutputDTOFull;
+    }
+
+    public EstudianteOutputDTO updateAsignaturas(String id, List<String> asignaturas){
+        Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado el estudiante con id: "+id));
+        List <Estudiante_asignatura> listaEstudianteAsignatura = estudiante_asignaturaRepository.findAllById(asignaturas);
+        estudiante.getEstudios().addAll(listaEstudianteAsignatura);
+        listaEstudianteAsignatura.forEach(asignatura->asignatura.getStudent().add(estudiante));
+        estudianteRepository.save(estudiante);
+        return modelMapper.map(estudiante, EstudianteOutputDTO.class);
+    }
+
+    public String deleteAsignaturas(String id, List <String> asignaturas) throws NotFoundException{
+        Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado el estudiante con id: "+id));
+        List <Estudiante_asignatura> listaEstudianteAsignatura = estudiante_asignaturaRepository.findAllById(asignaturas);
+        estudiante.getEstudios().removeAll(listaEstudianteAsignatura);
+        listaEstudianteAsignatura.forEach(asignatura->asignatura.getStudent().remove(estudiante));
+        estudianteRepository.save(estudiante);
+        return "Asignaturas eliminadas";
     }
 
     public EstudianteOutputDTO updateEstudiante(String id, EstudianteInputDTO estudianteInputDTO){

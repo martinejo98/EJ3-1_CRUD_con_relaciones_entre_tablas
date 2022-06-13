@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/estudiante")
@@ -32,6 +33,17 @@ public class EstudianteController {
         }else{
             return estudianteService.getEstudiante(id);
         }
+    }
+
+    @PutMapping("/addAsignatura/{id}")
+    public void updateAsignatura(@PathVariable String id, @RequestBody List<String> asignaturas){
+        estudianteService.updateAsignaturas(id, asignaturas);
+    }
+
+    @PutMapping("/deleteAsignatura/{id}")
+    public String deleteEAsignatura(@PathVariable String id, @RequestBody List<String> asignaturas){
+        estudianteService.deleteAsignaturas(id, asignaturas);
+        return "Asignatura eliminado";
     }
 
     @PutMapping("/update/{id}")

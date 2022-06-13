@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class Estudiante_asignaturaService {
@@ -29,21 +30,23 @@ public class Estudiante_asignaturaService {
     ModelMapper modelMapper;
 
     public Estudiante_asignaturaOutputDTO addAsignatura(Estudiante_asignaturaInputDTO estudiante_asignaturaInputDTO){
-        System.out.println("hola1");
-        Estudiante_asignatura estudiante_asignatura = estudiante_asignaturaRepository.save(modelMapper.map(estudiante_asignaturaInputDTO, Estudiante_asignatura.class));
-        System.out.println("hola2");
-        return modelMapper.map(estudiante_asignatura, Estudiante_asignaturaOutputDTO.class);
+        Estudiante_asignatura estudiante_asignatura = new Estudiante_asignatura();
+        List <Estudiante> listaEstudiantes = estudianteRepository.findAllById(estudiante_asignaturaInputDTO.getStudent());
+        estudiante_asignatura = modelMapper.map(estudiante_asignaturaInputDTO, Estudiante_asignatura.class);
+        estudiante_asignatura.setStudent(listaEstudiantes);
+        estudiante_asignaturaRepository.save(estudiante_asignatura);
+        Estudiante_asignaturaOutputDTO estudiante_asignaturaOutputDTO = modelMapper.map(estudiante_asignatura, Estudiante_asignaturaOutputDTO.class);
+        estudiante_asignaturaOutputDTO.returnIdEstudiante(listaEstudiantes);
+        return estudiante_asignaturaOutputDTO;
     }
 
     public List<Estudiante_asignaturaOutputDTO> getEstudianteAsignatura(String id){
-        List <Estudiante_asignaturaOutputDTO> listaEstudianteAsignatura = new ArrayList<>();
-        estudiante_asignaturaRepository.findAll().forEach(
-                estudiante_asignatura -> {
-                    Estudiante_asignaturaOutputDTO estudiante_asignaturaOutputDTO = modelMapper.map(estudiante_asignatura, Estudiante_asignaturaOutputDTO.class);
-                    listaEstudianteAsignatura.add(estudiante_asignaturaOutputDTO);
-                }
-        );
-        return listaEstudianteAsignatura;
+        List <Estudiante_asignatura> listaEstudianteAsignatura = new ArrayList<>();
+        int i=0;
+        Estudiante estudiante = estudianteRepository.findById(id).orElseThrow(()-> new NotFoundException("No se ha encontrado al estudiante "+id));
+        listaEstudianteAsignatura=estudiante.getEstudios();
+        List <Estudiante_asignaturaOutputDTO> listaEstudianteAsignaturaDTO = listaEstudianteAsignatura.stream().map(asignatura->modelMapper.map(asignatura, Estudiante_asignaturaOutputDTO.class)).collect(Collectors.toList());
+        return listaEstudianteAsignaturaDTO;
     }
 
     public Estudiante_asignaturaOutputDTO updateAsignatura(String id, Estudiante_asignaturaInputDTO estudiante_asignaturaInputDTO){
@@ -51,10 +54,10 @@ public class Estudiante_asignaturaService {
         if(Estuadiante_asigantura.isPresent()){
 
             estudiante_asignaturaInputDTO.setAsignatura(Optional.ofNullable(estudiante_asignaturaInputDTO.getAsignatura()).orElse(Estuadiante_asigantura.get().getAsignatura()));
-            estudiante_asignaturaInputDTO.setComents(Optional.ofNullable(estudiante_asignaturaInputDTO.getComents()).orElse(Estuadiante_asigantura.get().getComment()));
+            estudiante_asignaturaInputDTO.setComment(Optional.ofNullable(estudiante_asignaturaInputDTO.getComment()).orElse(Estuadiante_asigantura.get().getComment()));
             estudiante_asignaturaInputDTO.setInitial_date(Optional.ofNullable(estudiante_asignaturaInputDTO.getInitial_date()).orElse(Estuadiante_asigantura.get().getInitial_date()));
             estudiante_asignaturaInputDTO.setFinish_date(Optional.ofNullable(estudiante_asignaturaInputDTO.getFinish_date()).orElse(Estuadiante_asigantura.get().getFinish_date()));
-            estudiante_asignaturaInputDTO.setStudent(Optional.ofNullable(estudiante_asignaturaInputDTO.getStudent()).orElse(Estuadiante_asigantura.get().getStudent().getId_student()));
+            //estudiante_asignaturaInputDTO.setStudent(Optional.ofNullable(estudiante_asignaturaInputDTO.getStudent()).orElse(Estuadiante_asigantura.get().getStudent().getId_student()));
 
             estudiante_asignaturaRepository.saveAndFlush(modelMapper.map(estudiante_asignaturaInputDTO, Estudiante_asignatura.class));
             Estudiante_asignaturaOutputDTO estudiante_asignaturaOutputDTO = modelMapper.map(estudiante_asignaturaInputDTO, Estudiante_asignaturaOutputDTO.class);

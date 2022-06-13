@@ -16,10 +16,8 @@ public class Estudiante_asignaturaController {
     @Autowired
     Estudiante_asignaturaService estudiante_asignaturaService;
 
-    //Le pasamos el id de estudiante para añadirle las asignaturas
     @PostMapping("/addAsignatura")
     public Estudiante_asignaturaOutputDTO addAsignatura(@RequestBody @Valid Estudiante_asignaturaInputDTO estudiante_asignaturaInputDTO){
-        System.out.println("hola desde controller");
         return estudiante_asignaturaService.addAsignatura(estudiante_asignaturaInputDTO);
     }
 

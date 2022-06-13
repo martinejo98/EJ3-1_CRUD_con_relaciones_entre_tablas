@@ -29,6 +29,7 @@ public class Estudiante{
                     @Parameter(name = PersonaSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d")
             }
     )
+    @Column(name ="id_estudiante")
     private String id_student;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -48,7 +49,7 @@ public class Estudiante{
     @Column(name = "rama")
     private String branch;
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "student")
     private List<Estudiante_asignatura> estudios;
 
     public Estudiante (EstudianteInputDTO estudianteInputDTO){

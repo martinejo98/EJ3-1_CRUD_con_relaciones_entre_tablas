@@ -5,24 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 public class Estudiante_asignaturaInputDTO {
 
-    private String profesor;
-    private String student;
+    private List<String> student;
     private String asignatura;
-    private String coments;
+    private String comment;
     private Date initial_date;
     private Date finish_date;
-
-    public Estudiante_asignaturaInputDTO(Estudiante_asignatura estudiante_asignatura){
-        setStudent(estudiante_asignatura.getStudent().getId_student());
-        setAsignatura(estudiante_asignatura.getAsignatura());
-        setComents(estudiante_asignatura.getComment());
-        setInitial_date(estudiante_asignatura.getInitial_date());
-        setFinish_date(estudiante_asignatura.getInitial_date());
-    }
 
 }
