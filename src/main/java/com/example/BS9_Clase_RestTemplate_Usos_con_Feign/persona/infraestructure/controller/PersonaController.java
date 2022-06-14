@@ -1,6 +1,7 @@
 package com.example.BS9_Clase_RestTemplate_Usos_con_Feign.persona.infraestructure.controller;
 
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.estudiante.application.EstudianteService;
+import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.feign.IFeignServer;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.persona.application.PersonaService;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.exception.UnprocesableException;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.persona.infraestructure.dto.input.PersonaInputDTO;
@@ -9,6 +10,7 @@ import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.profesor.application.Pr
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.profesor.infraestructure.dto.output.ProfesorOutputDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -141,14 +143,26 @@ public class PersonaController {
 
     ////////////////////////////////////////////RestTemplate////////////////////////////////////////////
 
-    @GetMapping("/profesor/{id}")
+    /*@GetMapping("/profesor/{id}")
     public ProfesorOutputDTO getProfesorRestTemplate(@PathVariable String id){
 
         ResponseEntity<ProfesorOutputDTO> personaOutputDTOResponseEntity = new RestTemplate().getForEntity("http://localhost:8081/profesor/getProfesor/"+id, ProfesorOutputDTO.class);
         if(personaOutputDTOResponseEntity.getStatusCode()==HttpStatus.OK){
             return personaOutputDTOResponseEntity.getBody();
         }throw new RuntimeException("No está OK");
-    }
+    }*/
 
+
+
+
+    ///////////////////////////////////////////////Feign///////////////////////////////////////////////
+
+    @Autowired
+    IFeignServer iFeignServer;
+
+    @GetMapping("/profesor/{id}")
+    public ProfesorOutputDTO getProfesorFeign(@PathVariable String id){
+        return iFeignServer.getProfesorFeign(id);
+    }
 
 }
