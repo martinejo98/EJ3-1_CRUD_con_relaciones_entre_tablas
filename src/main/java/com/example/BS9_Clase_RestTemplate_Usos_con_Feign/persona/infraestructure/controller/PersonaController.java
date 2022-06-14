@@ -1,6 +1,7 @@
 package com.example.BS9_Clase_RestTemplate_Usos_con_Feign.persona.infraestructure.controller;
 
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.estudiante.application.EstudianteService;
+import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.feign.FeignFallback;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.feign.IFeignServer;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.persona.application.PersonaService;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.exception.UnprocesableException;
@@ -10,11 +11,8 @@ import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.profesor.application.Pr
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.profesor.infraestructure.dto.output.ProfesorOutputDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -158,11 +156,11 @@ public class PersonaController{
     ///////////////////////////////////////////////Feign///////////////////////////////////////////////
 
     @Autowired
-    private IFeignServer iFeignServer;
+    FeignFallback feignFallback;
 
     @GetMapping("/profesor/{id}")
-    public ProfesorOutputDTO getProfesorFeign(@PathVariable String id){
-        return iFeignServer.getProfesorFeign(id);
+    public ResponseEntity<ProfesorOutputDTO> getProfesorFeign(@PathVariable String id){
+        return feignFallback.getProfesorFeign(id);
     }
 
 }

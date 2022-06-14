@@ -1,5 +1,6 @@
 package com.example.BS9_Clase_RestTemplate_Usos_con_Feign.profesor.infraestructure.controller;
 
+import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.feign.IFeignServer;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.profesor.application.ProfesorService;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.exception.UnprocesableException;
 import com.example.BS9_Clase_RestTemplate_Usos_con_Feign.profesor.infraestructure.dto.input.ProfesorInputDTO;
@@ -37,4 +38,6 @@ public class ProfesorController {
         profesorService.deleteProfesor(id);
         return "Profesor eliminado";
     }
+
+
 }
