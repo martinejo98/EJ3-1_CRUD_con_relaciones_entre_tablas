@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/persona")
-public class PersonaController {
+public class PersonaController{
 
     @Autowired
     private PersonaService personaService;
@@ -158,7 +158,7 @@ public class PersonaController {
     ///////////////////////////////////////////////Feign///////////////////////////////////////////////
 
     @Autowired
-    IFeignServer iFeignServer;
+    private IFeignServer iFeignServer;
 
     @GetMapping("/profesor/{id}")
     public ProfesorOutputDTO getProfesorFeign(@PathVariable String id){
